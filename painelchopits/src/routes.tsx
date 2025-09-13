@@ -2,11 +2,12 @@ import {
     BrowserRouter,
     Routes,
     Route
-} from "react-router-dom"
-import { Home } from "./pages/Home"
-import { Categorias } from "./pages/Categorias"
-import { Usuarios } from "./pages/Usuarios"
-import GerenciarUsuarios from "./pages/Usuarios/Gerenciar"
+} from "react-router-dom";
+import { Home } from "./pages/Home";
+import { Categorias } from "./pages/Categorias";
+import { Usuarios } from "./pages/Usuarios";
+import GerenciarUsuarios from "./pages/Usuarios/Gerenciar";
+import { Sobre } from "./pages/Sobre"; 
 
 export const Rotas = () => {
     return (
@@ -15,6 +16,11 @@ export const Rotas = () => {
                 <Route
                     path="/"
                     element={<Home />}
+                />
+                
+                <Route
+                    path="/sobre/:id"
+                    element={<Sobre />}
                 />
                 <Route
                     path="/categorias/:id"
@@ -26,7 +32,7 @@ export const Rotas = () => {
                 />
                 <Route
                     path="/usuarios/:id"
-                    element={<GerenciarUsuarios/>}
+                    element={<GerenciarUsuarios />}
                 />
                 <Route
                     path="*"

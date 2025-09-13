@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { FaPen, FaTrash } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom' 
 
 interface IUsuarios {
     id: number;
@@ -10,6 +11,7 @@ interface IUsuarios {
 
 export const Usuarios = () => {
 
+    const navigate = useNavigate(); 
     const [usuarios, setUsuarios] = useState<IUsuarios[]>([])
 
     useEffect(() => {
@@ -18,13 +20,18 @@ export const Usuarios = () => {
         axios.get('http://localhost:3001/usuarios')
             .then((resposta) => {
                 console.log(resposta.data)
-
                 setUsuarios(resposta.data)
             })
             .catch((erro) => {
                 console.log(erro)
             })
     }, [])
+
+    
+    const handleAdicionar = () => {
+    
+        navigate('/usuarios/novo');
+    }
 
     return (
         <>
@@ -39,6 +46,7 @@ export const Usuarios = () => {
                 <button
                     type="button"
                     className="btn btn-success"
+                    onClick={handleAdicionar} 
                 >
                     Adicionar
                 </button>
@@ -65,6 +73,8 @@ export const Usuarios = () => {
                                             className="btn btn-primary"
                                             type="button"
                                             style={{ marginRight: 5 }}
+                                            
+                                            
                                         >
                                             <FaPen />
                                         </button>

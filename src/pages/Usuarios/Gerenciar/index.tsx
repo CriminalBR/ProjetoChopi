@@ -1,0 +1,106 @@
+import axios from "axios";
+import { useCallback, useRef, type SyntheticEvent } from "react"
+
+export default function GerenciarUsuarios() {
+
+    const refForm = useRef<any>(null)
+
+    const submitForm = useCallback((event: SyntheticEvent) => {
+        event.preventDefault();
+
+        if (refForm.current.checkValidity()) {
+
+            const target = event.target as typeof event.target & {
+                nome: { value: string },
+                email: { value: string },
+            }
+
+            let objSalvar = {
+                nome: target.nome.value,
+                email: target.email.value,
+            }
+
+            axios.post('http://localhost:3001/usuarios', objSalvar)
+                .then(() => {
+                    alert('Salvo, que alegria ;D')
+                })
+                .catch((erro) => {
+                    console.log(erro)
+                    alert('Deu ruim, que triste ;(')
+                })
+
+        } else {
+            refForm.current.classList.add('was-validated')
+        }
+
+    }, [])
+
+    return (
+        <>
+            <h1>Usuario</h1>
+
+            <form
+                noValidate
+                className="needs-validation g-3 row"
+                ref={refForm}
+                onSubmit={submitForm}
+            >
+
+                <div className="col-md-12">
+                    <label
+                        htmlFor="nome"
+                        className="formLabel"
+                    >
+                        Nome
+                    </label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Digite seu nome"
+                        id="nome"
+                        required
+                    />
+                    <div className="invalid-feedback">
+                        Por favor digite seu nome.
+                    </div>
+                </div>
+
+
+                <div className="col-md-12">
+                    <label
+                        htmlFor="email"
+                        className="formLabel"
+                    >
+                        Email
+                    </label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Digite seu email"
+                        id="email"
+                        required
+                    />
+                    <div className="invalid-feedback">
+                        Por favor digite seu email.
+                    </div>
+                </div>
+
+                <div className="col-md-12">
+                    <button
+                        className="btn btn-danger"
+                        type="button"
+                    >
+                        Voltar
+                    </button>
+
+                    <button
+                        className="btn btn-primary"
+                        type="submit"
+                    >
+                        Salvar
+                    </button>
+                </div>
+            </form>
+        </>
+    )
+}
